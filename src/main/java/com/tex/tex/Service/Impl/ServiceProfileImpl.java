@@ -32,4 +32,10 @@ public class ServiceProfileImpl implements IServiceProfile {
         return iHandleProfileRepo.getProfileByUsername(username);
     }
 
+    @Override
+    public void addContact(String username) {
+        Profile profile = iHandleProfileRepo.getProfileByUsername(username);
+        //this function needs jwt token to be decoded so that we can get the logged-in user
+    }
+
 }

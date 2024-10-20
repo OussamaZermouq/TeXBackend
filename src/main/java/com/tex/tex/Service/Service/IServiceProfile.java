@@ -9,5 +9,6 @@ public interface IServiceProfile {
     public void createProfile(Profile profile);
     public void updateProfile(Profile profile);
     public Profile getProfile(String username);
+    public void addContact(String username);
 
 }

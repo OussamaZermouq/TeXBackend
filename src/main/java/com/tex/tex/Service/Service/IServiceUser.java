@@ -1,10 +1,7 @@
 package com.tex.tex.Service.Service;
 
 import com.tex.tex.Models.User;
-import com.tex.tex.UserDTO;
-
-import java.util.List;
-import java.util.UUID;
+import com.tex.tex.DTO.UserDTO;
 
 public interface IServiceUser {
     public void addUser(User user);

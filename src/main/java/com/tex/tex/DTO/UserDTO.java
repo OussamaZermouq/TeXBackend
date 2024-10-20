@@ -1,4 +1,4 @@
-package com.tex.tex;
+package com.tex.tex.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

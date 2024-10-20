@@ -1,16 +1,16 @@
 package com.tex.tex.Service.Impl;
 
+import com.tex.tex.Models.Role;
 import com.tex.tex.Models.User;
 import com.tex.tex.Repository.IHandleUserRepo;
 import com.tex.tex.Service.Service.IServiceUser;
-import com.tex.tex.UserDTO;
+import com.tex.tex.DTO.UserDTO;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Service
@@ -35,6 +35,9 @@ public class ServiceUserImpl implements IServiceUser {
     }
 
     private User convertToEntity(UserDTO userDTO){
-        return new User(userDTO.getId(),userDTO.getEmail(),userDTO.getCratedAt());
+        Set<Role> userRole = new HashSet<Role>();
+        Role role = new Role(0L,"USER");
+        userRole.add(role);
+        return new User(userDTO.getId(),userDTO.getEmail(),null,userDTO.getCratedAt(), userRole);
     }
 }
