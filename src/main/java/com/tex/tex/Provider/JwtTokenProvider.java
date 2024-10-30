@@ -18,19 +18,18 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    private String jwtSecret = "$2a$12$p82pUdYa376qq2awKag91uT1Kmshn0EIzE0SMs12.7rLmbtyadyui";
+    private String jwtSecret = "VGhlcmUncyBtb3JlIG9mIHRoZSBkZXZpbCB0aGFuIG15IGRlc2lnbiBpbiBhbGwgdGhpcy4=";
     private long jwtExpiration = 604800000;
     public String generateToken(Authentication authentication){
         String email = authentication.getName();
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime()+jwtExpiration);
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
-        return token;
     }
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
@@ -52,9 +51,8 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
-        //kinda bad code but it should do until I find a better solution for prod
-        long diff = ChronoUnit.SECONDS.between((Temporal) expirationDate, (Temporal) new Date());
-        return diff>0;
+
+        return expirationDate.before(new Date());
     }
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = getUsername(token);

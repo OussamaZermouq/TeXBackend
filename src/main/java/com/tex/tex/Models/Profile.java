@@ -1,5 +1,6 @@
 package com.tex.tex.Models;
 
+import com.tex.tex.DTO.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +25,5 @@ public class Profile {
     private String bio;
     private String imageURI;
     @DBRef
-    private User user;
-    @DBRef
-    private List<Profile> contacts;
+    private HashSet<Profile> contacts;
 }

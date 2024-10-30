@@ -1,11 +1,13 @@
 package com.tex.tex.DTO;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
-@AllArgsConstructor
-public class LoginDTO {
+public class RegisterDTO {
+    private UUID id;
     private String email;
     private String password;
+
 }

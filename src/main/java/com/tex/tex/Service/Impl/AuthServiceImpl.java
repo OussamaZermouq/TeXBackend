@@ -1,6 +1,7 @@
 package com.tex.tex.Service.Impl;
 
 import com.tex.tex.DTO.LoginDTO;
+import com.tex.tex.DTO.RegisterDTO;
 import com.tex.tex.Provider.JwtTokenProvider;
 import com.tex.tex.Service.Service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,16 @@ public class AuthServiceImpl implements IAuthService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
     @Override
     public String login(LoginDTO loginDTO) {
-        Authentication authentication  = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDTO.getEmail(),
-                loginDTO.getPassword()
+        Authentication authentication  = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginDTO.getEmail(),
+                    loginDTO.getPassword()
         ));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
-        return token;
+        return jwtTokenProvider.generateToken(authentication);
     }
+
 }
