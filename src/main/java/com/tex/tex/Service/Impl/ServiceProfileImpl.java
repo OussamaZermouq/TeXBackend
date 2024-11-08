@@ -46,12 +46,10 @@ public class ServiceProfileImpl implements IServiceProfile {
             throw new IllegalArgumentException("Token is required");
         }
 
-        // Get profile to add
         Profile profileToAdd = iHandleProfileRepo.findById(profileID)
                 .orElseThrow(() -> new RuntimeException("Profile to add not found"));
 
         try {
-            // Get inviter's profile
             String inviterEmail = jwtTokenProvider.getUsername(token);
             UserDTO inviterUser = iServiceUser.searchUserByEmail(inviterEmail);
 
@@ -60,7 +58,6 @@ public class ServiceProfileImpl implements IServiceProfile {
                 throw new RuntimeException("Inviter doesn't have a profile");
             }
 
-            // Validate self-adding
             if (inviterProfile.getProfileId().equals(profileID)) {
                 throw new RuntimeException("Cannot add yourself as a contact");
             }
@@ -70,12 +67,10 @@ public class ServiceProfileImpl implements IServiceProfile {
                 inviterProfile.setContacts(new HashSet<>());
             }
 
-            // Now we can safely check for duplicates
             if (inviterProfile.getContacts().contains(profileToAdd)) {
                 throw new RuntimeException("Contact already exists");
             }
 
-            // Add contact and save
             inviterProfile.getContacts().add(profileToAdd);
             iHandleProfileRepo.save(inviterProfile);
 

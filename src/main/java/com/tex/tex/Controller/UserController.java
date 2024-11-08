@@ -1,6 +1,5 @@
 package com.tex.tex.Controller;
 
-import com.tex.tex.DTO.ContactRequestDTO;
 import com.tex.tex.Models.Profile;
 import com.tex.tex.Models.User;
 import com.tex.tex.Service.Impl.ServiceProfileImpl;
@@ -10,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -43,6 +42,10 @@ public class UserController {
     @GetMapping("/user")
     private Optional<User> getUser(@RequestParam String userId){
         return ResponseEntity.accepted().body(serviceUser.getUserById(userId)).getBody();
+    }
+    @GetMapping("/contacts")
+    private ResponseEntity<HashSet<Profile>> getContacts(@RequestHeader String authorization){
+        return ResponseEntity.accepted().body(serviceUser.getContactsForAUser(authorization));
     }
 
 }

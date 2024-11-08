@@ -1,6 +1,5 @@
 package com.tex.tex.Service.Impl;
 
-import com.tex.tex.DTO.ContactRequestDTO;
 import com.tex.tex.Models.Profile;
 import com.tex.tex.Models.User;
 import com.tex.tex.Provider.JwtTokenProvider;
@@ -13,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,9 +33,10 @@ public class ServiceUserImpl implements IServiceUser {
                 password(passwordEncoder.encode(user.getPassword())).
                 roles(user.getRoles()).
                 build();
-        System.out.println(user_);
         iHandleUserRepo.save(user_);
     }
+
+
 
 
     @Override
@@ -54,6 +54,14 @@ public class ServiceUserImpl implements IServiceUser {
         user.ifPresent(value -> value.setProfile(profile));
         iHandleUserRepo.save(user.get());
 
+    }
+
+    @Override
+    public HashSet<Profile> getContactsForAUser(String userToken) {
+        String userEmail = jwtTokenProvider.getUsername(userToken.substring(7));
+        User user = iHandleUserRepo.findByEmail(userEmail);
+
+        return user.getProfile().getContacts();
     }
 
     public UserDTO convertToDTO(User user){
