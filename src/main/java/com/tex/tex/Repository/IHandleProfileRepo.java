@@ -10,4 +10,7 @@ public interface IHandleProfileRepo extends MongoRepository<Profile, UUID> {
     @Query("{'username':?0}")
     public Profile getProfileByUsername(String username);
 
+    @Query("{'profileId': ?0}")
+    public Profile getProfileById(UUID uuid);
+
 }

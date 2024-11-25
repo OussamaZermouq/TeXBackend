@@ -2,11 +2,8 @@ package com.tex.tex.Service.Impl;
 
 import com.tex.tex.DTO.UserDTO;
 import com.tex.tex.Models.Profile;
-import com.tex.tex.Models.User;
 import com.tex.tex.Provider.JwtTokenProvider;
 import com.tex.tex.Repository.IHandleProfileRepo;
-import com.tex.tex.Repository.IHandleUserRepo;
-import com.tex.tex.Service.Service.IAuthService;
 import com.tex.tex.Service.Service.IServiceProfile;
 import com.tex.tex.Service.Service.IServiceUser;
 import lombok.Data;
@@ -34,11 +31,18 @@ public class ServiceProfileImpl implements IServiceProfile {
     public void updateProfile(Profile profile) {
         iHandleProfileRepo.save(profile);
     }
+    @Override
+    public Profile getProfileById(String uuid) {
+        UUID profileId = UUID.fromString(uuid);
+        return iHandleProfileRepo.getProfileById(profileId);
+    }
 
     @Override
     public Profile getProfile(String username) {
         return iHandleProfileRepo.getProfileByUsername(username);
     }
+
+
     @Override
     @Transactional
     public void addContact(UUID profileID, String token) {
@@ -51,7 +55,7 @@ public class ServiceProfileImpl implements IServiceProfile {
 
         try {
             String inviterEmail = jwtTokenProvider.getUsername(token);
-            UserDTO inviterUser = iServiceUser.searchUserByEmail(inviterEmail);
+            UserDTO inviterUser = iServiceUser.searchUserDTOByEmail(inviterEmail);
 
             Profile inviterProfile = inviterUser.getProfile();
             if (inviterProfile == null) {

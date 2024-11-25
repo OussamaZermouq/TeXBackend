@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Document("user")
 public class User {
     @Id

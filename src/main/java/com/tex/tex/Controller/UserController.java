@@ -20,13 +20,14 @@ public class UserController {
     private ServiceUserImpl serviceUser;
     @Autowired
     private ServiceProfileImpl serviceProfile;
+
     @PostMapping("/add")
     private ResponseEntity<String> addUser(@RequestBody User user){
-
         serviceUser.addUser(user);
         return ResponseEntity.accepted().build();
     }
-    
+
+
     @PostMapping("/linkProfile")
     private ResponseEntity<String> linkProfile(@RequestParam String userId,
                                                @RequestBody Profile profile) {

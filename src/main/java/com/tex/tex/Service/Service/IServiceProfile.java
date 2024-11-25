@@ -9,6 +9,7 @@ public interface IServiceProfile {
     public void createProfile(Profile profile);
     public void updateProfile(Profile profile);
     public Profile getProfile(String username);
+    public Profile getProfileById(String uuid);
     public void addContact(UUID profileID, String token);
 
 }

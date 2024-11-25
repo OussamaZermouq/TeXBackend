@@ -1,7 +1,7 @@
 package com.tex.tex.Controller;
 
-import com.tex.tex.Models.Message;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
+import com.tex.tex.test.Greeting;
+import com.tex.tex.test.HelloMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,9 @@ import org.springframework.web.util.HtmlUtils;
 public class MessagingController{
     @MessageMapping("/chat/{chatID}")
     @SendTo("/topic/chat/{chatID}")
-    public Message greeting(@DestinationVariable String chatID, Message message) throws Exception {
+    public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
-        return message;
+        System.out.println(message.getName());
+        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 }

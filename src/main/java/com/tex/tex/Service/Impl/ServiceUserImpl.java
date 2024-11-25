@@ -38,13 +38,12 @@ public class ServiceUserImpl implements IServiceUser {
 
 
 
-
     @Override
     public void updateUser(User user) {
         iHandleUserRepo.save(user);
     }
     @Override
-    public UserDTO searchUserByEmail(String email){
+    public UserDTO searchUserDTOByEmail(String email){
         return convertToDTO(iHandleUserRepo.findByEmail(email));
     }
 
@@ -62,6 +61,11 @@ public class ServiceUserImpl implements IServiceUser {
         User user = iHandleUserRepo.findByEmail(userEmail);
 
         return user.getProfile().getContacts();
+    }
+
+    @Override
+    public User searchUserByEmail(String email) {
+        return iHandleUserRepo.findByEmail(email);
     }
 
     public UserDTO convertToDTO(User user){
