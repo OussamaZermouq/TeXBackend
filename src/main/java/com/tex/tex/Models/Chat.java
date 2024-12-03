@@ -16,8 +16,8 @@ import java.util.UUID;
 @Document("chat")
 public class Chat {
     @Id
-    private UUID chatUUID = UUID.randomUUID();
-    //initialize empty array on object creation so that we can store message upon chatting
+    private UUID chatId = UUID.randomUUID();
+    //initialize empty array on object creation so that we can store message upon creating a chat
     @DBRef
     private List<Message> messages = new ArrayList<>();
     @DBRef

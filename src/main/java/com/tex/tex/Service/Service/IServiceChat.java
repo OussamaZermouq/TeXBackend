@@ -11,4 +11,7 @@ public interface IServiceChat {
     void createChat(List<Profile> members);
     List<Chat> getChatsForAProfile(UUID profileId);
 
+    void updateChat(Chat chat);
+    Chat getChatById(UUID chatId);
+
 }

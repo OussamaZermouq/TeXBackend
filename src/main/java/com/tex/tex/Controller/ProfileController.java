@@ -35,7 +35,7 @@ public class ProfileController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("addContact")
+    @PostMapping("/addContact")
     private ResponseEntity<String> addContact(@RequestBody ContactRequestDTO profileRequestID,
                                               @RequestHeader(name = "Authorization") String token
     ){

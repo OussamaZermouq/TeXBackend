@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,7 @@ public class ChatServiceImpl implements IServiceChat {
     public void createChat(List<Profile> members) {
         iHandleChatRepo.save(new Chat(members));
     }
+
 
     @Override
     public List<Chat> getChatsForAProfile(UUID profileId) {
@@ -36,6 +38,21 @@ public class ChatServiceImpl implements IServiceChat {
                     return chat;
                 })
                 .toList();
+    }
+
+    @Override
+    public void updateChat(Chat chat) {
+        iHandleChatRepo.save(chat);
+    }
+
+    @Override
+    public Chat getChatById(UUID chatId) {
+        Optional<Chat> chat = iHandleChatRepo.findById(chatId);
+        if (chat.isPresent()){
+            return chat.get();
+        }
+        return null;
+
     }
 
 
