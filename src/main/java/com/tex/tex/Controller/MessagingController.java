@@ -29,22 +29,27 @@ public class MessagingController {
     //endpoint example :/app/chat/0294c2dc-30b0-4123-ae32-28718a654358
     @MessageMapping("/chat/{chatId}")
     @SendTo("/topic/chat/{chatId}")
-    public MessageSentDTO message(MessageSentDTO message, @DestinationVariable String chatId) {
+    public Message message(MessageSentDTO message, @DestinationVariable String chatId) {
         Chat chat = chatService.getChatById(UUID.fromString(chatId));
-        if (chat == null || message == null) {
+        Optional<User> userSender = userService.getUserById(String.valueOf(message.getSenderId()));
+
+        if (chat == null || message == null || userSender.isEmpty()) {
+            System.err.print("THERE IS AN ISSUE WITH THE SENT MESSAGE");
             return null;
         }
-        Optional<User> userSender = userService.getUserById(String.valueOf(message.getSenderId()));
+
         Message messageToSend = Message.builder().
                 messageId(message.getMessageId()).
                 sender(userSender.get()).
                 content(message.getContent()).
                 createdAt(message.getCreatedAt()).
                 build();
+
         chat.getMessages().add(messageToSend);
         messageService.saveMessage(messageToSend);
         chatService.updateChat(chat);
-        return message;
+
+        return messageToSend;
 
     }
 }
