@@ -14,6 +14,5 @@ public interface IServiceUser {
     public void linkToProfile(String userId, Profile profile);
     public HashSet<Profile> getContactsForAUser(String userToken);
 
-
     public User searchUserByEmail(String email);
 }

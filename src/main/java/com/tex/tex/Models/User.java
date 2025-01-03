@@ -19,7 +19,6 @@ import java.util.UUID;
 public class User {
     @Id
     private UUID id = UUID.randomUUID();
-    @Indexed(unique = true)
     private String email;
     private String password;
     @CreatedDate

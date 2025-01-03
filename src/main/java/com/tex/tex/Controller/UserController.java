@@ -1,9 +1,11 @@
 package com.tex.tex.Controller;
 
+import com.tex.tex.DTO.UserDTO;
 import com.tex.tex.Models.Profile;
 import com.tex.tex.Models.User;
 import com.tex.tex.Service.Impl.ServiceProfileImpl;
 import com.tex.tex.Service.Impl.ServiceUserImpl;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class UserController {
     private ServiceProfileImpl serviceProfile;
 
     @PostMapping("/add")
-    private ResponseEntity<String> addUser(@RequestBody User user){
+    private ResponseEntity<String> addUser(@RequestBody User user) {
         serviceUser.addUser(user);
         return ResponseEntity.accepted().build();
     }
@@ -41,12 +43,17 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    private Optional<User> getUser(@RequestParam String userId){
+    private Optional<User> getUser(@RequestParam String userId) {
         return ResponseEntity.accepted().body(serviceUser.getUserById(userId)).getBody();
     }
+
     @GetMapping("/contacts")
-    private ResponseEntity<HashSet<Profile>> getContacts(@RequestHeader String authorization){
+    private ResponseEntity<HashSet<Profile>> getContacts(@RequestHeader String authorization) {
         return ResponseEntity.accepted().body(serviceUser.getContactsForAUser(authorization));
     }
 
+    @GetMapping("/email/{email}")
+    private ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.accepted().body(serviceUser.searchUserDTOByEmail(email));
+    }
 }

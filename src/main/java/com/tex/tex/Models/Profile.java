@@ -1,5 +1,6 @@
 package com.tex.tex.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tex.tex.DTO.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Profile {
     private String bio;
     private String imageURI;
     @DBRef
+    @JsonIgnore
     private HashSet<Profile> contacts;
 
 }
